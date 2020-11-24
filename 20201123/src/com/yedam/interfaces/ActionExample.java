@@ -16,6 +16,8 @@ public class ActionExample {
 		};
 		
 		action.work(); // 운전
+		
+		Arrays
 	}
 
 }
