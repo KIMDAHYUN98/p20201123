@@ -27,76 +27,23 @@ public class FriendAddress {
 			scn.nextLine();
 
 			if (selectNo == 1) {
-//				System.out.println("친구이름 > ");
-//				String name = scn.nextLine(); // name 이란 변수에다가 사용자가 입력한 값을 넣겠다
-//				System.out.println("전화번호 > ");
-//				String phone = scn.nextLine();
-//
-				Friend frnd = new Friend(name, phone); // 인스턴스를 만들어서 friend frnd 에다가 할당하겠다
-//
-//				for (int i = 0; i < friends.length; i++) {
-//					if (friends[i] == null) {
-//						friends[i] = frnd;
-//						break;
-//					}
-//				}
 
 				addFriend();
 				insertFriend(frnd);
 
 			} else if (selectNo == 2) {
-//				System.out.println("친구이름 > ");
-//				String name = scn.nextLine();
-//				System.out.println("전화번호 > ");
-//				String phone = scn.nextLine();
-//				System.out.println("학교이름 > ");
-//				String univ = scn.nextLine();
-//				System.out.println("전공 > ");
-//				String major = scn.nextLine();
-//
-//				UnivFriend frnd = new UnivFriend(name, phone);
-//				frnd.setUniv(univ);
-//				frnd.setMajor(major);
-//
-//				for (int i = 0; i < friends.length; i++) {
-//					if (friends[i] == null) {
-//						friends[i] = frnd;
-//						break;
-//					}
-//				}
+
 
 				addUnivFriend();
 
 			} else if (selectNo == 3) {
 
-//				System.out.println("친구이름 > ");
-//				String name = scn.nextLine();
-//				System.out.println("전화번호 > ");
-//				String phone = scn.nextLine();
-//				System.out.println("회사이름 > ");
-//				String univ = scn.nextLine();
-//				System.out.println("부서정보 > ");
-//				String major = scn.nextLine();
-//
-//				CompFriend frnd = new CompFriend(name, phone);
-//				frnd.setCompany(univ);
-//				frnd.setDepartment(major);
-//
-//				for (int i = 0; i < friends.length; i++) {
-//					if (friends[i] == null) {
-//						friends[i] = frnd;
-//						break;
-//					}
-//				}
+
 				addCompFriend();
 
 			} else if (selectNo == 4) {
 
-//				for (int i = 0; i < friends.length; i++) {
-//					if (friends[i] != null) {
-//						friends[i].showFriendInfo();
-//					}
-//				}
+
 
 				showFriendList();
 
@@ -104,18 +51,7 @@ public class FriendAddress {
 
 				break;
 			} else if (selectNo == 6) {
-//				System.out.println("전화번호 검색 > ");
-//				String serachphone = scn.nextLine();
-//				for (int i = 0; i < friends.length; i++) {
-//					if (friends[i] != null) {
-//						if (serachphone.equals(friends[i].getPhone())) {
-//
-//							friends[i].showFriendInfo();
-//							break;
-//
-//						}
-//					}
-//				}
+
 				serachFriend();
 				
 			}
