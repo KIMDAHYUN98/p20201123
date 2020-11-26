@@ -19,6 +19,7 @@ public class EmpMain {
 			System.out.println("==============================================");
 			System.out.println("선택 > ");
 			int selectNO = scn.nextInt(); scn.nextLine();
+			
 			if (selectNO == 1) {
 				List list = service.getEmpList();
 				for (Object vo : list) {
