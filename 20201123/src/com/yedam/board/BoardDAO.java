@@ -41,18 +41,43 @@ public class BoardDAO {
 		}
 		return list;
 	}
+	
+	public BoardVO getBoard(int boardNo) {
+		conn = DAO.getConnection();
+		sql = "select * FROM board where board_no = ?";
+		BoardVO vo = new BoardVO();
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo.setBoardNo(rs.getInt("board_no"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("CONTENT"));
+				vo.setWriter(rs.getString("writer"));
+				vo.setCreationDate(rs.getString("creation_date"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
 
 	public void  insertBoard(BoardVO boardVO) {
 	
 		conn = DAO.getConnection();
-		sql =  "INSERT INTO board(board_no, title, CONTENT, writer, creation_date)" + "VALUES(?, ?, ?, ?, ?)";
+		sql =  "INSERT INTO board(board_no, title, CONTENT, writer, creation_date)" + "VALUES(?, ?, ?, ?, sysdate)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardVO.getBoardNo());
 			pstmt.setString(2, boardVO.getTitle());
 			pstmt.setString(3, boardVO.getContent());
 			pstmt.setString(4, boardVO.getWriter());
-			pstmt.setString(5, boardVO.getCreationDate());
+//			pstmt.setString(5, boardVO.getCreationDate());
 			
 			int r = pstmt.executeUpdate();
 			
@@ -64,22 +89,25 @@ public class BoardDAO {
 
 		
 	public void updateBoard(BoardVO vo) {
-		sql = "UPDATE board SET board_no = ?, title = ?, content =?, writer = ?, creation_date = ?";
+		sql = "UPDATE board" 
+			+ " SET title = nvl('" + vo.getTitle() + "', title)" 
+			+ " , content = nvl('" + vo.getContent() + "', content)" 
+			+ " , writer = nvl('" + vo.getWriter() + "', writer)" 
+			+ " , creation_date = nvl('" + vo.getCreationDate() + "', creation_date)"
+			+ " where board_no = " + vo.getBoardNo();
 	
 		conn = DAO.getConnection();
+		System.out.println(sql);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getBoardNo());
-			pstmt.setString(2, vo.getTitle());
-			pstmt.setString(3, vo.getContent());
-			pstmt.setString(4, vo.getWriter());
-			pstmt.setString(5, vo.getCreationDate());
 			
 			pstmt.executeUpdate();
 						
 			int r = pstmt.executeUpdate();
+			
 			System.out.println(r + "건이 수정됨.");
+			
 		} catch(SQLException e) {
 			e.printStackTrace();
 			
@@ -113,27 +141,29 @@ public class BoardDAO {
 
 
 
-public static Connection getConnection() {
-	Connection conn = null;
-	try {
-		String user = "hr";
-		String pw = "hr";
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//public static Connection getConnection() {
+//	Connection conn = null;
+//	try {
+//		String user = "hr";
+//		String pw = "hr";
+//		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//
+//		Class.forName("oracle.jdbc.driver.OracleDriver");
+//		conn = DriverManager.getConnection(url, user, pw);
+//
+//		System.out.println("Database에 연결되었습니다.\n");
+//
+//	} catch (ClassNotFoundException cnfe) {
+//		System.out.println("DB 드라이버 로딩 실패 :" + cnfe.toString());
+//	} catch (SQLException sqle) {
+//		System.out.println("DB 접속실패 : " + sqle.toString());
+//	} catch (Exception e) {
+//		System.out.println("Unkonwn error");
+//		e.printStackTrace();
+//	}
+//	return conn;
+//
+//}
 
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		conn = DriverManager.getConnection(url, user, pw);
 
-		System.out.println("Database에 연결되었습니다.\n");
-
-	} catch (ClassNotFoundException cnfe) {
-		System.out.println("DB 드라이버 로딩 실패 :" + cnfe.toString());
-	} catch (SQLException sqle) {
-		System.out.println("DB 접속실패 : " + sqle.toString());
-	} catch (Exception e) {
-		System.out.println("Unkonwn error");
-		e.printStackTrace();
-	}
-	return conn;
-
-}
 }

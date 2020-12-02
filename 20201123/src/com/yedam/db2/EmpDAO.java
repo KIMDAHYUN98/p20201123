@@ -18,10 +18,10 @@ public class EmpDAO {
 
 	// 전체 조회
 
-	public List getEmpList() {
+	public List<EmployeeVO> getEmpList() {
 		conn = DAO.getConnection();
 		sql = "select * FROM emp1 order by 1"; // id 기준으로 정렬
-		List list = new ArrayList();
+		List<EmployeeVO> list = new ArrayList<EmployeeVO>();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -34,7 +34,7 @@ public class EmpDAO {
 				vo.setPhoneNumber(rs.getString("phone_number"));
 				vo.setHireDate(rs.getString("hire_date"));
 				vo.setSalary(rs.getInt("salary"));
-				
+
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -141,10 +141,37 @@ public class EmpDAO {
 
 			System.out.println(r + "건 삭제됨.");
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 
 	}
 
+	// 부서별 정보 조회
+	public List<EmployeeVO> getDeptList(String dept){
+		conn = DAO.getConnection();
+		sql = "select * from emp1 where department_id = (select department_id from departments where department_name = ?)";
+		List<EmployeeVO> list = new ArrayList<EmployeeVO>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dept);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				EmployeeVO vo = new EmployeeVO();
+				vo.setEmployeeId(rs.getInt("employee_id"));
+				vo.setFirstName(rs.getString("first_name"));
+				vo.setLastName(rs.getString("last_name"));
+				vo.setEmail(rs.getString("email"));
+				vo.setPhoneNumber(rs.getString("phone_number"));
+				vo.setHireDate(rs.getString("hire_date"));
+				vo.setSalary(rs.getInt("salary"));
+
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
 }

@@ -14,7 +14,7 @@ public class BoardMain {
 
 		while (true) {
 			System.out.println("========================================");
-			System.out.println("1. 전체조회 2. 입력 3. 수정 4. 삭제 5. 종료");
+			System.out.println("1. 전체조회 2. 입력 3. 수정 4. 삭제 5. 종료 6.한건조회");
 			System.out.println("========================================");
 			System.out.println("선택 > ");
 
@@ -50,12 +50,18 @@ public class BoardMain {
 				vo.setCreationDate(creationDate);
 
 				service.updateBoard(vo);
+				
 			} else if (selectNo == 4) {
 				System.out.println("delete board_no > ");
 				int boardNo = scn.nextInt();
 				service.deleteBoard(boardNo);
 			} else if (selectNo == 5) {
 				break;
+			} else if (selectNo == 6) {
+				System.out.println("select board_no > ");
+				int boardNo = scn.nextInt();
+				BoardVO vo = service.getBoard(boardNo);
+				vo.showBoardInfo();
 			}
 		} // end of while
 

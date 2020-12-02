@@ -15,11 +15,12 @@ public class EmpMain {
 
 		while (true) {
 			System.out.println("==============================================");
-			System.out.println("1. 전체조회 2. 검색 3. 입력 4. 수정 5. 삭제 6. 종료"); //
+			System.out.println("1. 전체조회 2. 검색 3. 입력 4. 수정 5. 삭제 6. 종료 7. 부서별 조회"); //
 			System.out.println("==============================================");
 			System.out.println("선택 > ");
-			int selectNO = scn.nextInt(); scn.nextLine();
-			
+			int selectNO = scn.nextInt();
+			scn.nextLine();
+
 			if (selectNO == 1) {
 				List list = service.getEmpList();
 				for (Object vo : list) {
@@ -43,27 +44,28 @@ public class EmpMain {
 
 			} else if (selectNO == 4) {
 				System.out.println("수정할 사원 번호 : ");
-				int empId = scn.nextInt(); scn.nextLine();
+				int empId = scn.nextInt();
+				scn.nextLine();
 				System.out.println("수정할 이메일 : ");
 				String email = scn.nextLine();
 				System.out.println("수정할 전화번호 : ");
 				String phoneNumber = scn.nextLine();
 				System.out.println("수정할 급여 : ");
 				String salary = scn.nextLine();
-				if(salary == null || salary.equals(""))
+				if (salary == null || salary.equals(""))
 					salary = "0";
-				int sal = Integer.parseInt(salary); //문자열인 숫자를 읽어서 숫자로 바꿔눔
-				
+				int sal = Integer.parseInt(salary); // 문자열인 숫자를 읽어서 숫자로 바꿔눔
+
 				EmployeeVO vo = new EmployeeVO();
 				vo.setEmployeeId(empId);
 				vo.setEmail(email);
 				vo.setPhoneNumber(phoneNumber);
 				vo.setSalary(sal);
-				
+
 				service.updateEmp(vo);
 
 			} else if (selectNO == 5) {
-				
+
 				System.out.println("삭제할 사원번호 입력 : ");
 				int empId = scn.nextInt();
 				service.deleteEmp(empId);
@@ -72,9 +74,19 @@ public class EmpMain {
 
 				break;
 
-			}
-		} // end of while
+			} else if (selectNO == 7) { // 제네릭 타입으로 구현해서 부서별 조회를 해라
 
+				System.out.println("조회할 부서 입력 : ");
+				String deptId = scn.nextLine();
+				List<EmployeeVO> list = service.getDeptList(deptId);
+				for (Object vo : list) {
+					EmployeeVO dept1 = (EmployeeVO) vo;
+					dept1.showEmpInfo();
+
+				}
+
+			}
+		}
 	} // end of main
 
 	public static void addEmployeeVO() {
@@ -83,7 +95,8 @@ public class EmpMain {
 		System.out.println("라스트 네임을 입력하세요 > ");
 		String lastName = scn.nextLine();
 		System.out.println("사원번호를 입력하세요 > ");
-		int employeeId = scn.nextInt(); scn.nextLine();
+		int employeeId = scn.nextInt();
+		scn.nextLine();
 		System.out.println("이메일을 입력하세요 > ");
 		String email = scn.nextLine();
 		System.out.println("입사한 날짜를 입력하세요 > ");
@@ -95,5 +108,6 @@ public class EmpMain {
 		EmpDAO dao = new EmpDAO();
 		dao.insertEmp(vo);
 
-	}
+	} // end of addEmployeeVO
+
 } // end of class
