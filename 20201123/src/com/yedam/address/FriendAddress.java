@@ -29,7 +29,6 @@ public class FriendAddress {
 			if (selectNo == 1) {
 
 				addFriend();
-				insertFriend(frnd);
 
 			} else if (selectNo == 2) {
 
